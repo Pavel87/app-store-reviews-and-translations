@@ -1,6 +1,10 @@
 # iTunes store review
 ## Access
-Access to the reviews is publically available via RSS feeds.
+Access to the reviews is publically available via RSS feeds. E.g.
+```
+https://itunes.apple.com/gb/rss/customerreviews/page=1/id=APPID/sortby=mostrecent/xml?urlDesc=/customerreviews/id=APPID/xml
+```
+where `APPID` is replaced with the store ID of your app.
 ## The .conf file
 The itunes conf file contains the following parameters:
 - path_log: Location where you want to store the log of the script
