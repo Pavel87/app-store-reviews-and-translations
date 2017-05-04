@@ -12,6 +12,9 @@ All the scripts are in Python and output JSON files in a format that is friendly
 - Retrieving Google Play review data using the android publisher API (google-play-rating.py)
 
 I like working with config files that contain usernames, passwords, secret keys and storage information to keep the scripts as general and transferable as possible. Examples of these are included in this project and the parameters are explained briefly.
+
+When you're all done you can create beautiful plots such as this:
+![alt text](https://raw.githubusercontent.com/shazam/app-store-reviews-and-translations/master/splunkscreenshot.png)
 # iTunes store review
 ## Access
 Access to the reviews is publically available via RSS feeds. E.g.
