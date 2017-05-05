@@ -34,14 +34,14 @@ def GetArgs():
     return args
 
 
-def translate(textToTranslate, key, log_f, hn):
+def translate(translate_text, key, log_f, hn):
 
-    toLangCode = "en"
+    lang_code = "en"
 
     service = build('translate', 'v2', developerKey=key)
-    if textToTranslate!=None:
+    if translate_text!=None:
         try:
-            result = service.translations().list(target=toLangCode,q=textToTranslate).execute()
+            result = service.translations().list(target=lang_code,q=translate_text).execute()
             translation = result['translations'][0]['translatedText']
         except:
             print "There was an error with the translation."
