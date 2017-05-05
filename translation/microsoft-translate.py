@@ -32,7 +32,7 @@ def GetArgs():
     return args
     
 
-def GetToken(client, client_token): #Get the access token from ADM, token is good for 10 minutes
+def get_token(client, client_token): 
     urlArgs = {
         'client_id': '%s' % client,
         'client_secret': '%s' % client_token,
@@ -43,30 +43,31 @@ def GetToken(client, client_token): #Get the access token from ADM, token is goo
     oauthUrl = 'https://datamarket.accesscontrol.windows.net/v2/OAuth2-13'
 
     try:
-        oauthToken = json.loads(requests.post(oauthUrl, data = urllib.urlencode(urlArgs)).content) #make call to get ADM token and parse json
-        finalToken = "Bearer " + oauthToken['access_token'] #prepare the token
+        # get token
+        oauth_token = json.loads(requests.post(oauthUrl, data = urllib.urlencode(urlArgs)).content) 
+        final_token = "Bearer " + oauth_token['access_token'] 
     except OSError:
         pass
 
-    return finalToken
+    return final_token
 
-def translate(finalToken,textToTranslate):
+def translate(final_token,translate_text):
 
-    toLangCode = "en"
+    lang_code = "en"
 
-    textToTranslate = codecs.encode(textToTranslate,'utf-8')   
-    url_text = urllib2.quote(textToTranslate)
+    translate_text = codecs.encode(translate_text,'utf-8')   
+    url_text = urllib2.quote(translate_text)
 
-    #Call to Microsoft Translator Service
+    # Call to Microsoft Translator Service
     headers = {"Authorization ": finalToken}
-    translateUrl = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text={}&to={}".format(url_text, toLangCode)
+    translate_url = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text={}&to={}".format(url_text, lang_code)
 
     try:
-        translationData = requests.get(translateUrl, headers = headers) #make request
-        translation = ElementTree.fromstring(translationData.text.encode('utf-8')).text # parse xml return values  
+        translation_data = requests.get(translate_url, headers = headers) #make request
+        translation = ElementTree.fromstring(translation_data.text.encode('utf-8')).text # parse xml return values  
         if translation == None:
             print "ERROR: Translation didn't work. Check token."
-            print translationData.text.encode('utf-8')
+            print translation_data.text.encode('utf-8')
 
     except:
         translation = None
@@ -99,10 +100,10 @@ def main():
     current_time = time.time()
     if current_time > (token_time + (5*60)):
         token_time = current_time
-        finalToken = GetToken(client_id, client_token)
+        final_token = get_token(client_id, client_token)
         print "Token renewed" 
 
-    translated_text    = translate(finalToken,text)
+    translated_text    = translate(final_token,text)
     print translated_text
 
     return
