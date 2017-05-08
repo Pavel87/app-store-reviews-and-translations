@@ -48,7 +48,7 @@ def translate(translate_text, key, log_f, hn):
             translation = result['translations'][0]['translatedText']
         except:
             print "There was an error with the translation."
-            log_f.write("%s %s android-rating: There was an error with the translation.\n" % (log_date(), hn))
+            log_f.write("%s %s itunes-rating: There was an error with the translation.\n" % (log_date(), hn))
             translation = None
     else:
         translation = None
